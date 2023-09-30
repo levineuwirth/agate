@@ -50,7 +50,6 @@ def generate_keypair(p, q):
     e = random.randrange(1, phi)
     g = gcd(e, phi)
     while g != 1:
-        print("attempt")
         e = random.randrange(1, phi)
         g = gcd(e, phi)
     d = multiplicative_inverse(e, phi)
@@ -72,46 +71,57 @@ directory = os.path.expanduser("~/Desktop/Cdev/agate/it/")
 prime_file = os.path.join(directory, "primes.txt")
 attempt_file = os.path.join(directory, "attempts.txt")
 total_file = os.path.join(directory, "total.txt")
-def cleanup():
-    primef.close()
-    attemptf.close()
-    totalf.close()
 
-while True:
-     with open(prime_file, 'a') as primef, open(attempt_file, 'a') as attemptf, open(total_file, 'a') as totalf:
-        startrun = time.time()
-        rand1a = 1
+# def cleanup():
+#     primef.close()
+#     attemptf.close()
+#     totalf.close()
+
+def full_gen():
+    rand1 = generate_random_digits()
+    while(not is_prime(rand1)):
         rand1 = generate_random_digits()
-        start1 = time.time()
-        while(not is_prime(rand1)):
-            rand1 = generate_random_digits()
-            rand1a += 1
-        primef.write(str(time.time()-start1))
-        print("found prime 1")
-        attemptf.write(str(rand1a)+"\n")
-        rand2a = 1
+    rand2 = generate_random_digits()
+    while(not is_prime(rand2)):
         rand2 = generate_random_digits()
-        start2 = time.time()
-        while(not is_prime(rand2)):
-                rand2 = generate_random_digits()
-                rand2a += 1
-        primef.write(str(time.time()-start1)+"\n")
-        print("found prime 2")
-        attemptf.write(str(rand2a)+"\n")
-        print("Random1: " + str(rand1))
-        print("Random2: " + str(rand2))
-        print("product: " + str(rand1*rand2))
+    keypair = generate_keypair(rand1, rand2)
+    return keypair
 
-        public, private = generate_keypair(rand1, rand2)
-        print("Public: " + str(public))
-        print("Private: " + str(private))
+# while True:
+#      with open(prime_file, 'a') as primef, open(attempt_file, 'a') as attemptf, open(total_file, 'a') as totalf:
+#         startrun = time.time()
+#         rand1a = 1
+#         rand1 = generate_random_digits()
+#         start1 = time.time()
+#         while(not is_prime(rand1)):
+#             rand1 = generate_random_digits()
+#             rand1a += 1
+#         primef.write(str(time.time()-start1))
+#         print("found prime 1")
+#         attemptf.write(str(rand1a)+"\n")
+#         rand2a = 1
+#         rand2 = generate_random_digits()
+#         start2 = time.time()
+#         while(not is_prime(rand2)):
+#                 rand2 = generate_random_digits()
+#                 rand2a += 1
+#         primef.write(str(time.time()-start1)+"\n")
+#         print("found prime 2")
+#         attemptf.write(str(rand2a)+"\n")
+#         print("Random1: " + str(rand1))
+#         print("Random2: " + str(rand2))
+#         print("product: " + str(rand1*rand2))
 
-        encrypted_msg = encrypt(private, message)
-        print("Your encrypted message is:\n")
-        print(''.join(map(lambda x: str(x), encrypted_msg)))
-        print("Your message is:\n")
-        print(decrypt(public, encrypted_msg))
-        totalf.write(str(time.time()-startrun)+"\n") 
-        totalf.close()
-        primef.close()  
-        attemptf.close()             
+#         public, private = generate_keypair(rand1, rand2)
+#         print("Public: " + str(public))
+#         print("Private: " + str(private))
+
+#         encrypted_msg = encrypt(private, message)
+#         print("Your encrypted message is:\n")
+#         print(''.join(map(lambda x: str(x), encrypted_msg)))
+#         print("Your message is:\n")
+#         print(decrypt(public, encrypted_msg))
+#         totalf.write(str(time.time()-startrun)+"\n") 
+#         totalf.close()
+#         primef.close()  
+#         attemptf.close()             
