@@ -6,6 +6,8 @@ I will implement algorithms such as RSA myself to deeply understand how they wor
 
 A special thanks is given to:
 
-Professor Richard Schwartz, BrownU Mathematics
+Python, for having built-in bignum support :)
 
-The original RSA themselves, for pioneering cryptography in an open way.
+Professor Richard Schwartz, BrownU Mathematics, for intriguing my interest in cryptography as an application of Abstract Algebra 
+
+The original inventors of these algorithms, for their pioneering work in keeping our communications and data safe
